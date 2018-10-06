@@ -802,6 +802,22 @@ function write_data(context, ofd, buffer, offset, length, position, callback) {
   context.getObject(ofd.id, read_file_data);
 }
 
+describe('fsPromises.truncate', funcion() {
+   beforeEach(util.setup);
+   afterEach(util.cleanup);
+   it('should error when file does not exist (with promises)' => {
+   var fsPromises = util.fs().promises;
+   return
+   fsPromises.truncate('/NonExistingFile' , 0)
+                  .catch(error => {
+    expect(error).to.exixts;
+    expect(error.code).to.equal('ENOENT');
+   })
+   .then(() => done());
+});
+});
+
+
 function read_data(context, ofd, buffer, offset, length, position, callback) {
   var fileNode;
   var fileData;
